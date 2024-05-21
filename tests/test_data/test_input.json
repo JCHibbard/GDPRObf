@@ -1,0 +1,4 @@
+{
+    "file_to_obfuscate": "s3://gdpr_testing_bucket/originals/gdpr1.csv",
+    "pii_fields": ["name", "email"]
+}
