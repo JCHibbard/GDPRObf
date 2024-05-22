@@ -14,8 +14,8 @@ from parse_json import parse_json
 from copy_from_s3 import copy_from_s3
 from obfuscate_fields import obfuscate_fields
 
-def gdpr_obf(json_input):
-    s3_location, pii_fields = parse_json(json_input)
+def gdpr_obf(input_json):
+    s3_location, pii_fields = parse_json(input_json)
     copied_file = copy_from_s3(s3_location)
     obfuscated_file = obfuscate_fields(copied_file, pii_fields)
     pass 
