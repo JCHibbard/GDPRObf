@@ -1,10 +1,5 @@
 import pytest
-import json
 from src.GDPRObf.parse_json import parse_json
-
-@pytest.fixture
-def input_json():
-    return json.dumps({"file_to_obfuscate" : "s3://gdpr_test_bucket/test_file.csv", "pii_fields": ["name", "email"]})
 
 def test_returns_two_outputs(input_json):
     result = len(parse_json(input_json))
