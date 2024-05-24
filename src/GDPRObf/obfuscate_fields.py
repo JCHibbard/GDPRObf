@@ -1,6 +1,6 @@
-### Takes contents of file to obfuscate, and pii fields
-# Replace any of the contents of the pii fields with "*****"
-# Return the modified file contents
+import pandas as pd
 
-def obfuscate_fields(copied_file, pii_fields):
-    pass
+def obfuscate_fields(copied_df, pii_fields):
+    obfuscated_df = copied_df
+    obfuscated_df[pii_fields] = '*****'
+    return obfuscated_df
