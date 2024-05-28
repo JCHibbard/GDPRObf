@@ -1,8 +1,19 @@
-### Takes S3 Location from main
-# takes the response object and converts it to a pandas dataframe
-# returns the dataframe
+import pandas as pd
+import boto3
+import re
+
 
 def copy_from_s3(s3_location):
-    #response = s3 get object 
-    # 
-    pass
+    # Initialise boto3
+    s3 = boto3.client('s3')
+    # Regex string for bucket name (Modify regex to ensure that it captures FULL bucket, not just outer dir)
+    regex = "(?<=s3://)([a-zA-Z-]+)[/](.+)"
+    # Strip bucket name and key name from input string
+    bucket_name = re.search(regex, s3_location).group(1)
+    key_name = re.search(regex, s3_location).group(2)
+    # Take S3 location and use s3.get_object
+    s3_data = s3.get_object(Bucket=bucket_name, Key=key_name)
+    # Create pandas dataframe from streaming body
+    copied_df = pd.read_csv(s3_data['Body'])
+    # Return dataframe
+    return copied_df
