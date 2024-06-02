@@ -15,7 +15,7 @@ def test_obfurscated_dataframe():
 
 @pytest.fixture(scope="function")
 def input_json():
-    yield json.dumps({"file_to_obfuscate" : "s3://gdpr_test_bucket/test_file.csv", "pii_fields": ["name", "email"]})
+    yield json.dumps({"file_to_obfuscate" : "s3://gdpr-test-bucket/mock_data.csv", "pii_fields": ["name", "email"]})
 
 @pytest.fixture(scope="function")
 def aws_credentials():
