@@ -1,7 +1,8 @@
 import pandas as pd
+import json
 import boto3
 import re
-import json
+import logging
 
 def gdpr_obf(input_json):
     s3_location, pii_fields = parse_json(input_json)
@@ -10,9 +11,20 @@ def gdpr_obf(input_json):
     obfuscated_bytes = convert_to_bytes(obfuscated_df)
     return obfuscated_bytes
 
+def parse_json(input_json):
+    try:
+        json_dict = json.loads(input_json)
+        if len(json_dict) != 2:
+            raise IndexError("Input JSON is wrong length")
+        s3_location = list(json_dict.values())[0]
+        pii_fields = list(json_dict.values())[1]
+        return s3_location, pii_fields
+    except IndexError as e:
+        logging.exception("JSON Input File has too many")
+
 def copy_from_s3(s3_location):
     s3 = boto3.client('s3')
-    regex = "(?<=s3://)([a-zA-Z-]+)[/](.+)"
+    regex = "(?<=s3://)([a-zA-Z-_]+)[/](.+)"
     bucket_name = re.search(regex, s3_location).group(1)
     key_name = re.search(regex, s3_location).group(2)
     s3_data = s3.get_object(Bucket=bucket_name, Key=key_name)
@@ -29,10 +41,3 @@ def obfuscate_fields(copied_df, pii_fields):
     obfuscated_df[pii_fields] = '*****'
     return obfuscated_df
 
-def parse_json(input_json):
-    json_dict = json.loads(input_json)
-    if len(json_dict) != 2:
-        raise IndexError("Input JSON is wrong length")
-    s3_location = list(json_dict.values())[0]
-    pii_fields = list(json_dict.values())[1]
-    return s3_location, pii_fields
