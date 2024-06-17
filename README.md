@@ -9,7 +9,7 @@ See the releases tab for a built version of the project, which can be downloaded
 <summary> Windows </summary>
 
 ```console
-py -m pip install ./downloads/
+py -m pip install ./downloads/gdpr_obfuscator-0.0.1-py3-none-any.whl
 ```
 </details>
 
@@ -17,7 +17,7 @@ py -m pip install ./downloads/
 <summary> Linux </summary>
 
 ```console
-python3 -m pip install ./downloads/
+python3 -m pip install ./downloads/gdpr_obfuscator-0.0.1-py3-none-any.whl
 ```
 </details>
 
@@ -32,8 +32,9 @@ GDPRObf takes a .json input with two keys; a string for the S3 location requeste
 ```
 The function should be used as such:
 ```python
+from gdpr_obfuscator import gdprobf
 # returns the newly obfuscated file as bytes
-gdpr_obf(input_string)
+gdprobf.gdpr_obf(input_string)
 ```
 The bytes returned from the function are the same format as the input.
 
