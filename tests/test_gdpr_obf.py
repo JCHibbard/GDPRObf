@@ -1,6 +1,6 @@
 import pandas as pd
 import pytest
-from src.gdprobf import (
+from gdprobf import (
     obfuscate_fields,
     convert_to_bytes,
     copy_from_s3,
