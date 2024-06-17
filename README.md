@@ -32,8 +32,9 @@ GDPRObf takes a .json input with two keys; a string for the S3 location requeste
 ```
 The function should be used as such:
 ```python
+from gdpr_obfuscator import gdprobf
 # returns the newly obfuscated file as bytes
-gdpr_obf(input_string)
+gdprobf.gdpr_obf(input_string)
 ```
 The bytes returned from the function are the same format as the input.
 
